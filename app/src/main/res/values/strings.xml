@@ -12,6 +12,14 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+   
+    <string name="stock_symbol">Sembol</string>
+    <string name="stock_price">Fiyat</string>
+    <string name="stock_difference">Fark</string>
+    <string name="stock_volume">Hacim</string>
+    <string name="stock_buy">Alış</string>
+    <string name="stock_sell">Satış</string>
+    <string name="stock_fluctuation">Değişim</string>
+
+    <string name="platform_name">Android</string>
 </resources>

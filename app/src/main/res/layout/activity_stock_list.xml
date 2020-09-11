@@ -23,6 +23,53 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/Theme.AppCompat.Light" />
 
+        <LinearLayout
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:id="@+id/tv_stock_symbol"
+                style="@style/tv_stock_header"
+                android:text="@string/stock_symbol" />
+
+            <TextView
+                android:id="@+id/tv_stock_price"
+                style="@style/tv_stock_header"
+                android:text="@string/stock_price" />
+
+            <TextView
+                android:id="@+id/tv_stock_difference"
+                style="@style/tv_stock_header"
+                android:text="@string/stock_difference" />
+
+            <TextView
+                android:id="@+id/tv_stock_volume"
+                style="@style/tv_stock_header"
+                android:text="@string/stock_volume" />
+
+            <TextView
+                android:id="@+id/tv_stock_buy"
+                style="@style/tv_stock_header"
+                android:text="@string/stock_buy" />
+
+            <TextView
+                android:id="@+id/tv_stock_sell"
+                style="@style/tv_stock_header"
+                android:text="@string/stock_sell" />
+
+            <TextView
+                android:id="@+id/tv_stock_fluctuation"
+                style="@style/tv_stock_header"
+                android:text="@string/stock_fluctuation" />
+
+        </LinearLayout>
+
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
