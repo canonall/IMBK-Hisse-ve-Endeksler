@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">IMBK Hisse Senetleri ve Endeksler</string>
+
+    <string name="veripark">VERIPARK</string>
+    <string name="imbk_stock_and_index">IMBK Hisse ve Endeksler</string>
+    <string name="stock_and_index">Hisse ve Endeksler</string>
+    <string name="increasing">Yükselenler</string>
+    <string name="decreasing">Azalanlar</string>
+    <string name="per_volume_30">Hacme Göre - 30</string>
+    <string name="per_volume_50">Hacme Göre - 50</string>
+    <string name="per_volume_100">Hacme Göre - 100</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_stock_message"
+            android:title="@string/stock_and_index" />
+        <item
+            android:id="@+id/nav_increasing_message"
+            android:title="@string/increasing" />
+        <item
+            android:id="@+id/nav_decreasing_message"
+            android:title="@string/decreasing" />
+        <item
+            android:id="@+id/nav_per_volume_30_message"
+            android:title="@string/per_volume_30" />
+        <item
+            android:id="@+id/nav_per_volume_50_message"
+            android:title="@string/per_volume_50" />
+        <item
+            android:id="@+id/nav_per_volume_100_message"
+            android:title="@string/per_volume_100" />
+    </group>
+</menu>
