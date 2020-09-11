@@ -22,4 +22,8 @@
     <string name="stock_fluctuation">Değişim</string>
 
     <string name="platform_name">Android</string>
+
+    <string name="aes_key">aesKey</string>
+    <string name="aes_iv">aesIv</string>
+    <string name="handshake_auth">handshakeAuth</string>
 </resources>

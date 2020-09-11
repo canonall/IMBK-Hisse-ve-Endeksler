@@ -31,10 +31,11 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
     @BindView(R.id.rv_stock)
     RecyclerView rvStock;
 
-    private DeviceInfo deviceInfo;
-    private StockApi stockApi;
     private StockAdapter stockAdapter;
 
+    private String aesKey;
+    private String aesIv;
+    private String handshakeAuth;
 
     @Nullable
     @Override
@@ -42,48 +43,17 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stock, container, false);
 
-        this.deviceInfo = DeviceInfoManager.getDeviceInfo(deviceInfo, getContext());
+        if (getArguments() != null) {
+            aesKey = getArguments().getString(getString(R.string.aes_key));
+            aesIv = getArguments().getString(getString(R.string.aes_iv));
+            handshakeAuth = getArguments().getString(getString(R.string.handshake_auth));
 
-        getStockApiClient();
-        sendHandshakeRequest();
-
-
+            Log.d("STOCK FRAGMENT", "aes key: " + aesKey);
+            Log.d("STOCK FRAGMENT", "aes key: " + aesIv);
+            Log.d("STOCK FRAGMENT", "aes key: " + handshakeAuth);
+        }
         return view;
     }
-
-    private void sendHandshakeRequest() {
-        Call<HandshakeRespond> call = stockApi.sendDeviceInfo(deviceInfo);
-        call.enqueue(new Callback<HandshakeRespond>() {
-            @Override
-            public void onResponse(Call<HandshakeRespond> call, Response<HandshakeRespond> response) {
-
-                //Request failed
-                if (!response.isSuccessful()) {
-                    Log.d("Handshake Request", "Handshake Request ERROR CODE: " + response.code());
-                }
-
-                HandshakeRespond handshakeRespond = response.body();
-
-                if (handshakeRespond != null) {
-
-                    Log.d("HANDSHAKE RESPOND", "AES KEY:"+handshakeRespond.getAesKey());
-                    Log.d("HANDSHAKE RESPOND", "AESIV"+handshakeRespond.getAesIV());
-                    Log.d("HANDSHAKE RESPOND", "AUTHORIZATION"+handshakeRespond.getAuthorization());
-                    Log.d("HANDSHAKE RESPOND", "LIFETIME"+handshakeRespond.getLifeTime());
-                    Log.d("HANDSHAKE RESPOND", "STATUS: "+Boolean.toString(handshakeRespond.getStatus().getIsSuccess()));
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<HandshakeRespond> call, Throwable t) {
-                Log.d("Handshake Request", "Handshake Request ERROR: " + t.getMessage());
-
-            }
-        });
-    }
-
 
     private void initiateStockRv() {
 
@@ -92,9 +62,6 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
         rvStock.setAdapter(stockAdapter);
     }
 
-    private void getStockApiClient() {
-        stockApi = StockApiClient.getClient(Constants.BASE_URL);
-    }
 
     @Override
     public void OnItemClick(int position) {
