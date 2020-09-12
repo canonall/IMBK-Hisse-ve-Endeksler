@@ -14,24 +14,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.canonal.imbkhissesenetleriveendeksler.R;
 import com.canonal.imbkhissesenetleriveendeksler.adapter.StockAdapter;
-import com.canonal.imbkhissesenetleriveendeksler.model.handshake.DeviceInfo;
-import com.canonal.imbkhissesenetleriveendeksler.model.handshake.HandshakeRespond;
+import com.canonal.imbkhissesenetleriveendeksler.model.stock.Period;
+import com.canonal.imbkhissesenetleriveendeksler.model.stock.PeriodRespond;
+import com.canonal.imbkhissesenetleriveendeksler.service.ListRequest;
 import com.canonal.imbkhissesenetleriveendeksler.service.StockApi;
 import com.canonal.imbkhissesenetleriveendeksler.service.StockApiClient;
-import com.canonal.imbkhissesenetleriveendeksler.utilty.Constants;
-import com.canonal.imbkhissesenetleriveendeksler.utilty.DeviceInfoManager;
+import com.canonal.imbkhissesenetleriveendeksler.utilty.RvInitiator;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StockFragment extends Fragment implements StockAdapter.OnItemClickListener {
+public class StockFragment extends Fragment implements StockAdapter.OnItemClickListener, ListRequest, RvInitiator {
+
+    private static final String plainPeriodText = "all";
 
     @BindView(R.id.rv_stock)
     RecyclerView rvStock;
 
+    private Period period;
+
     private StockAdapter stockAdapter;
+    private StockApi stockApi;
 
     private String aesKey;
     private String aesIv;
@@ -43,19 +59,69 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stock, container, false);
 
+        stockApi = StockApiClient.getStockApiClient(stockApi);
+
         if (getArguments() != null) {
             aesKey = getArguments().getString(getString(R.string.aes_key));
             aesIv = getArguments().getString(getString(R.string.aes_iv));
             handshakeAuth = getArguments().getString(getString(R.string.handshake_auth));
 
             Log.d("STOCK FRAGMENT", "aes key: " + aesKey);
-            Log.d("STOCK FRAGMENT", "aes key: " + aesIv);
-            Log.d("STOCK FRAGMENT", "aes key: " + handshakeAuth);
+            Log.d("STOCK FRAGMENT", "aes iv: " + aesIv);
+            Log.d("STOCK FRAGMENT", "handshake auth: " + handshakeAuth);
         }
+
+
+        try {
+
+            //TODO
+            //Encryption with AES
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7PADDING");
+            SecretKey secretKey = new SecretKeySpec(aesKey.getBytes(), 0, aesKey.length(), "AES");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            byte[] cipherText = cipher.doFinal(plainPeriodText.getBytes());
+            byte[] iv = cipher.getIV();
+
+            //TODO encrypt period with AES
+            //TODO then set it as period
+            //TODO thereafter send request
+            period = new Period();
+            period.setPeriod(Arrays.toString(cipherText));
+            sendListRequest();
+
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+
+
         return view;
     }
 
-    private void initiateStockRv() {
+    @Override
+    public void sendListRequest() {
+        Call<PeriodRespond> call = stockApi.sendPeriod(handshakeAuth, period);
+        call.enqueue(new Callback<PeriodRespond>() {
+            @Override
+            public void onResponse(Call<PeriodRespond> call, Response<PeriodRespond> response) {
+
+                //Request failed
+                if (!response.isSuccessful()) {
+                    Log.d("Period Request", "Period Request ERROR CODE: " + response.code());
+                }
+
+                PeriodRespond periodRespond = response.body();
+                Log.d("STOKC PERIOD RESPOND: ", "periodRespond: " + periodRespond.getStatus().getIsSuccess());
+            }
+
+            @Override
+            public void onFailure(Call<PeriodRespond> call, Throwable t) {
+                Log.d("Period Request", "Period Request ERROR: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void initiateStockRv() {
 
         rvStock.setLayoutManager(new LinearLayoutManager(getContext()));
         stockAdapter = new StockAdapter(getContext(), this);
@@ -66,6 +132,7 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
     @Override
     public void OnItemClick(int position) {
         //TODO on stock clicked
-        //TODO detay kısmı
+        //TODO show detail
     }
+
 }

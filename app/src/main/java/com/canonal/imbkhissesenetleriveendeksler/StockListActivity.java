@@ -62,7 +62,7 @@ public class StockListActivity extends AppCompatActivity implements NavigationVi
         bundle = new Bundle();
 
         this.deviceInfo = DeviceInfoManager.getDeviceInfo(deviceInfo, this);
-        getStockApiClient();
+        this.stockApi = StockApiClient.getStockApiClient(stockApi);
         sendHandshakeRequest();
 
     }
@@ -168,9 +168,9 @@ public class StockListActivity extends AppCompatActivity implements NavigationVi
         return true;
     }
 
-    private void getStockApiClient() {
-        stockApi = StockApiClient.getClient(Constants.BASE_URL);
-    }
+    // private void getStockApiClient() {
+    //     stockApi = StockApiClient.getClient(Constants.BASE_URL);
+    // }
 
     private void setActionBar() {
 
