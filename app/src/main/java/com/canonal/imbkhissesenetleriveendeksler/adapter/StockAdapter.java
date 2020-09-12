@@ -10,13 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.canonal.imbkhissesenetleriveendeksler.R;
+import com.canonal.imbkhissesenetleriveendeksler.model.stock.PeriodRespond;
 
 public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> {
 
+    private PeriodRespond periodRespond;
     private LayoutInflater layoutInflater;
     private OnItemClickListener onItemClickListener;
 
-    public StockAdapter(Context context, OnItemClickListener onItemClickListener) {
+    public StockAdapter(PeriodRespond periodRespond, Context context, OnItemClickListener onItemClickListener) {
+        this.periodRespond = periodRespond;
         this.layoutInflater = LayoutInflater.from(context);
         this.onItemClickListener = onItemClickListener;
     }
@@ -29,7 +32,16 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StockAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        holder.tvStockSymbolInfo.setText(periodRespond.getStocks().get(position).getSymbol());
+        holder.tvStockPriceInfo.setText(String.valueOf(periodRespond.getStocks().get(position).getPrice()));
+        holder.tvStockDifferenceInfo.setText(String.valueOf(periodRespond.getStocks().get(position).getDifference()));
+        holder.tvStockVolumeInfo.setText(String.valueOf(periodRespond.getStocks().get(position).getVolume()));
+        holder.tvStockBuyInfo.setText(String.valueOf(periodRespond.getStocks().get(position).getBid()));
+        holder.tvStockSellInfo.setText(String.valueOf(periodRespond.getStocks().get(position).getOffer()));
+        holder.tvStockFluctuationInfo.setText(String.valueOf(periodRespond.getStocks().get(position).getIsUp()));
+
 
     }
 

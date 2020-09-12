@@ -1,5 +1,6 @@
 package com.canonal.imbkhissesenetleriveendeksler.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.canonal.imbkhissesenetleriveendeksler.R;
+import com.canonal.imbkhissesenetleriveendeksler.StockDetailActivity;
 import com.canonal.imbkhissesenetleriveendeksler.adapter.StockAdapter;
 import com.canonal.imbkhissesenetleriveendeksler.model.stock.Period;
 import com.canonal.imbkhissesenetleriveendeksler.model.stock.PeriodRespond;
@@ -37,6 +39,7 @@ public class Volume30Fragment extends Fragment implements StockAdapter.OnItemCli
     private StockAdapter stockAdapter;
 
     private Period period;
+    private PeriodRespond periodRespond;
 
     private String aesKey;
     private String aesIv;
@@ -79,8 +82,9 @@ public class Volume30Fragment extends Fragment implements StockAdapter.OnItemCli
                     Log.d("Period Request", "Period Request ERROR CODE: " + response.code());
                 }
 
-                PeriodRespond periodRespond = response.body();
+                periodRespond = response.body();
                 Log.d("STOKC PERIOD RESPOND: ", "periodRespond: " + periodRespond.getStatus().getIsSuccess());
+                initiateStockRv(periodRespond);
             }
 
             @Override
@@ -93,14 +97,15 @@ public class Volume30Fragment extends Fragment implements StockAdapter.OnItemCli
 
     @Override
     public void OnItemClick(int position) {
-        //TODO on stock clicked
-        //TODO show detail
+        Intent intent = new Intent(getContext(), StockDetailActivity.class);
+        intent.putExtra(getString(R.string.period_respond), periodRespond.getStocks().get(position));
+        startActivity(intent);
     }
 
     @Override
-    public void initiateStockRv() {
+    public void initiateStockRv(PeriodRespond periodRespond) {
         rvVolume30.setLayoutManager(new LinearLayoutManager(getContext()));
-        stockAdapter = new StockAdapter(getContext(), this);
+        stockAdapter = new StockAdapter(periodRespond, getContext(), this);
         rvVolume30.setAdapter(stockAdapter);
 
     }

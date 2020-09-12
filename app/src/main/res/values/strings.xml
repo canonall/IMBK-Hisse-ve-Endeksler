@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IMBK Hisse Senetleri ve Endeksler</string>
+    <string name="app_name">IMBK Hisse ve Endeksler</string>
 
     <string name="veripark">VERIPARK</string>
     <string name="imbk_stock_and_index">IMBK Hisse ve Endeksler</string>
@@ -12,7 +12,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-   
+
     <string name="stock_symbol">Sembol</string>
     <string name="stock_price">Fiyat</string>
     <string name="stock_difference">Fark</string>
@@ -21,9 +21,17 @@
     <string name="stock_sell">Satış</string>
     <string name="stock_fluctuation">Değişim</string>
 
+    <string name="stock_daily_decrease">Günlük Düşüş</string>
+    <string name="stock_daily_increase">Günlük Yüksek</string>
+    <string name="stock_number">Adet</string>
+    <string name="stock_ceil">Tavan</string>
+    <string name="stock_bottom">Taban</string>
+
     <string name="platform_name">Android</string>
 
     <string name="aes_key">aesKey</string>
     <string name="aes_iv">aesIv</string>
     <string name="handshake_auth">handshakeAuth</string>
+
+    <string name="period_respond">periodRespond</string>
 </resources>

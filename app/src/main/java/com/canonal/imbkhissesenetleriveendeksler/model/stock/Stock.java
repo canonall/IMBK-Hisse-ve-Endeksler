@@ -1,10 +1,13 @@
 
 package com.canonal.imbkhissesenetleriveendeksler.model.stock;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Stock {
+public class Stock implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -106,4 +109,87 @@ public class Stock {
         this.symbol = symbol;
     }
 
+
+    protected Stock(Parcel in) {
+        id = in.readByte() == 0x00 ? null : in.readInt();
+        byte isDownVal = in.readByte();
+        isDown = isDownVal == 0x02 ? null : isDownVal != 0x00;
+        byte isUpVal = in.readByte();
+        isUp = isUpVal == 0x02 ? null : isUpVal != 0x00;
+        bid = in.readByte() == 0x00 ? null : in.readDouble();
+        difference = in.readByte() == 0x00 ? null : in.readDouble();
+        offer = in.readByte() == 0x00 ? null : in.readDouble();
+        price = in.readByte() == 0x00 ? null : in.readDouble();
+        volume = in.readByte() == 0x00 ? null : in.readDouble();
+        symbol = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(id);
+        }
+        if (isDown == null) {
+            dest.writeByte((byte) (0x02));
+        } else {
+            dest.writeByte((byte) (isDown ? 0x01 : 0x00));
+        }
+        if (isUp == null) {
+            dest.writeByte((byte) (0x02));
+        } else {
+            dest.writeByte((byte) (isUp ? 0x01 : 0x00));
+        }
+        if (bid == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(bid);
+        }
+        if (difference == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(difference);
+        }
+        if (offer == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(offer);
+        }
+        if (price == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(price);
+        }
+        if (volume == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(volume);
+        }
+        dest.writeString(symbol);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Stock> CREATOR = new Parcelable.Creator<Stock>() {
+        @Override
+        public Stock createFromParcel(Parcel in) {
+            return new Stock(in);
+        }
+
+        @Override
+        public Stock[] newArray(int size) {
+            return new Stock[size];
+        }
+    };
 }

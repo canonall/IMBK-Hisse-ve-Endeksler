@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StockDetailActivity">
+
+    <TextView
+        android:id="@+id/tv_detail_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="@string/stock_symbol" />
+
+    <TextView
+        android:id="@+id/tv_detail_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_detail_symbol"
+        android:layout_alignStart="@id/tv_detail_symbol"
+        android:layout_alignEnd="@id/tv_detail_symbol"
+        android:layout_marginTop="5dp"
+        android:text="@string/stock_price" />
+
+    <TextView
+        android:id="@+id/tv_detail_difference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_detail_price"
+        android:layout_alignStart="@id/tv_detail_symbol"
+        android:layout_alignEnd="@id/tv_detail_symbol"
+        android:layout_marginTop="5dp"
+        android:text="@string/stock_difference" />
+
+    <TextView
+        android:id="@+id/tv_detail_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_detail_difference"
+        android:layout_alignStart="@id/tv_detail_symbol"
+        android:layout_alignEnd="@id/tv_detail_symbol"
+        android:layout_marginTop="5dp"
+        android:text="@string/stock_volume" />
+
+    <TextView
+        android:id="@+id/tv_detail_bid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_detail_volume"
+        android:layout_alignStart="@id/tv_detail_symbol"
+        android:layout_alignEnd="@id/tv_detail_symbol"
+        android:layout_marginTop="5dp"
+        android:text="@string/stock_buy" />
+
+    <TextView
+        android:id="@+id/tv_detail_offer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_detail_bid"
+        android:layout_alignStart="@id/tv_detail_symbol"
+        android:layout_alignEnd="@id/tv_detail_symbol"
+        android:layout_marginTop="5dp"
+        android:text="@string/stock_sell" />
+
+    <TextView
+        android:id="@+id/tv_daily_decrease"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_detail_symbol"
+        android:layout_marginEnd="15dp"
+        android:layout_toEndOf="@id/tv_detail_symbol"
+        android:gravity="end"
+        android:text="@string/stock_daily_decrease" />
+
+    <TextView
+        android:id="@+id/tv_daily_increase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_daily_decrease"
+        android:layout_alignStart="@id/tv_daily_decrease"
+        android:layout_alignEnd="@id/tv_daily_decrease"
+        android:gravity="end"
+        android:text="@string/stock_daily_increase" />
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_daily_increase"
+        android:layout_alignStart="@id/tv_daily_decrease"
+        android:layout_alignEnd="@id/tv_daily_decrease"
+        android:gravity="end"
+        android:text="@string/stock_number" />
+
+    <TextView
+        android:id="@+id/tv_ceil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_number"
+        android:layout_alignStart="@id/tv_daily_decrease"
+        android:layout_alignEnd="@id/tv_daily_decrease"
+        android:gravity="end"
+        android:text="@string/stock_ceil" />
+
+    <TextView
+        android:id="@+id/tv_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_ceil"
+        android:layout_alignStart="@id/tv_daily_decrease"
+        android:layout_alignEnd="@id/tv_daily_decrease"
+        android:gravity="end"
+        android:text="@string/stock_bottom" />
+
+    <TextView
+        android:id="@+id/tv_fluctuation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_bottom"
+        android:layout_alignStart="@id/tv_daily_decrease"
+        android:layout_alignEnd="@id/tv_daily_decrease"
+        android:gravity="end"
+        android:text="@string/stock_fluctuation" />
+
+</RelativeLayout>

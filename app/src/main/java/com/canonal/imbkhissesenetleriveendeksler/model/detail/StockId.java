@@ -1,13 +1,13 @@
 package com.canonal.imbkhissesenetleriveendeksler.model.detail;
 
 public class StockId {
-    private String stockId;
+    private int stockId;
 
-    public String getStockId() {
+    public int getStockId() {
         return stockId;
     }
 
-    public void setStockId(String stockId) {
+    public void setStockId(int stockId) {
         this.stockId = stockId;
     }
 }

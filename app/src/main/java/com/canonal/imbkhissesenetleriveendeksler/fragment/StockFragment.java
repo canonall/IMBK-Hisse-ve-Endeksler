@@ -1,5 +1,6 @@
 package com.canonal.imbkhissesenetleriveendeksler.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.canonal.imbkhissesenetleriveendeksler.R;
+import com.canonal.imbkhissesenetleriveendeksler.StockDetailActivity;
 import com.canonal.imbkhissesenetleriveendeksler.adapter.StockAdapter;
 import com.canonal.imbkhissesenetleriveendeksler.model.stock.Period;
 import com.canonal.imbkhissesenetleriveendeksler.model.stock.PeriodRespond;
+import com.canonal.imbkhissesenetleriveendeksler.model.stock.Stock;
 import com.canonal.imbkhissesenetleriveendeksler.service.ListRequest;
 import com.canonal.imbkhissesenetleriveendeksler.service.StockApi;
 import com.canonal.imbkhissesenetleriveendeksler.service.StockApiClient;
@@ -24,6 +27,7 @@ import com.canonal.imbkhissesenetleriveendeksler.utilty.RvInitiator;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -45,6 +49,7 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
     RecyclerView rvStock;
 
     private Period period;
+    private PeriodRespond periodRespond;
 
     private StockAdapter stockAdapter;
     private StockApi stockApi;
@@ -93,7 +98,6 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
             e.printStackTrace();
         }
 
-
         return view;
     }
 
@@ -109,8 +113,12 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
                     Log.d("Period Request", "Period Request ERROR CODE: " + response.code());
                 }
 
-                PeriodRespond periodRespond = response.body();
-                Log.d("STOKC PERIOD RESPOND: ", "periodRespond: " + periodRespond.getStatus().getIsSuccess());
+                periodRespond = response.body();
+                Log.d("STOCK PERIOD RESPOND: ", "periodRespond: " + periodRespond.getStatus().getIsSuccess());
+
+
+                initiateStockRv(periodRespond);
+
             }
 
             @Override
@@ -121,18 +129,20 @@ public class StockFragment extends Fragment implements StockAdapter.OnItemClickL
     }
 
     @Override
-    public void initiateStockRv() {
+    public void initiateStockRv(PeriodRespond periodRespond) {
 
         rvStock.setLayoutManager(new LinearLayoutManager(getContext()));
-        stockAdapter = new StockAdapter(getContext(), this);
+        stockAdapter = new StockAdapter(periodRespond, getContext(), this);
         rvStock.setAdapter(stockAdapter);
     }
 
 
     @Override
     public void OnItemClick(int position) {
-        //TODO on stock clicked
-        //TODO show detail
+        Intent intent = new Intent(getContext(), StockDetailActivity.class);
+        intent.putExtra(getString(R.string.handshake_auth), handshakeAuth);
+        intent.putExtra(getString(R.string.period_respond), periodRespond.getStocks().get(position));
+        startActivity(intent);
     }
 
 }
